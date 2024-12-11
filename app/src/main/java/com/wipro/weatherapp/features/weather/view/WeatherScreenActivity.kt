@@ -1,9 +1,12 @@
 package com.wipro.weatherapp.features.weather.view
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.wipro.weaterapp.databinding.WeatherScreenActivityBinding
 import com.wipro.weatherapp.features.weather.viewmodel.WeatherViewModel
@@ -22,13 +25,31 @@ class WeatherScreenActivity : AppCompatActivity() {
         setContentView(view)
         setupObservers()
         weatherViewModel.loadWeather()
+
+        binding.etCityname.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
+                // Check if the text is not empty and call API
+                val city=charSequence.toString().trim()
+                if (city.isNotEmpty()) {
+                    weatherViewModel.cityName.value=city
+                    weatherViewModel.loadWeather()
+                }
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+            }
+        })
     }
 
 
     private fun setupObservers() {
         weatherViewModel.weatherResponse.observe(this) { it ->
+
             binding.temperature.text = "${it.current?.temperature}°C"
-            binding.locationName.text = it.location?.country
+            binding.locationName.text = "${it.location?.name} ,${it.location?.country}"
             binding.weatherDescription.text = it.current?.weatherDescriptions?.firstOrNull()
             binding.feelsLike.text = "Feels like ${it.current?.feelslike}°C"
             binding.windSpeed.text = "Wind: ${it.current?.windSpeed} km/h ${it.current?.windDir}"
