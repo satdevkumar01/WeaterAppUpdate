@@ -1,4 +1,4 @@
-package com.wipro.weatherapp.core.data
+package com.wipro.weatherapp.data.model
 
 import com.google.gson.annotations.SerializedName
 

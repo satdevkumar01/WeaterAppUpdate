@@ -6,10 +6,10 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.wipro.weatherapp.core.data.WeatherResponse
-import com.wipro.weatherapp.core.data.network.ApiInterface
-import com.wipro.weatherapp.core.data.network.RetrofitClient
-import com.wipro.weatherapp.core.data.utils.DEFAULT_LOCATION
+import com.wipro.weatherapp.data.model.WeatherResponse
+import com.wipro.weatherapp.data.api.WeatherAPIService
+import com.wipro.weatherapp.data.RetrofitClient
+import com.wipro.weatherapp.presentation.viewmodel.WeatherViewModel
 import io.mockk.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -29,7 +29,7 @@ class WeatherViewModelTest {
 
     private lateinit var weatherViewModel: WeatherViewModel
     private val application: Application = mockk(relaxed = true)
-    private val apiInterface: ApiInterface = mockk(relaxed = true)
+    private val apiInterface: WeatherAPIService = mockk(relaxed = true)
 
     @Before
     fun setUp() {
