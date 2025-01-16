@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.compose)
 }
 
 android {
@@ -42,6 +43,9 @@ android {
         buildConfig = true
         compose = true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "2.8.7" // Use the latest version
+    }
 }
 
 dependencies {
@@ -55,6 +59,8 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+    implementation(libs.coil.compose)
+
 //    implementation(libs.navigation.fragment)
 //    implementation(libs.navigation.ui)
 //    implementation(libs.glide)

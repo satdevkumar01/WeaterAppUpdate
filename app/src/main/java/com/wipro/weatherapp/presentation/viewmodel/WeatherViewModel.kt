@@ -20,14 +20,14 @@ class WeatherViewModel(
    private val getWeatherUseCase: GetWeatherUseCase
     ) : AndroidViewModel(application) {
 
-    private val response: MutableLiveData<Resource<WeatherResponse>> = MutableLiveData()
+     val weatherResponse: MutableLiveData<Resource<WeatherResponse>> = MutableLiveData()
     fun getWeather(city:String) = viewModelScope.launch(Dispatchers.IO) {
-        response.postValue(Resource.Loading())
+        weatherResponse.postValue(Resource.Loading())
         if (isNetworkAvailable(application)) {
             val apiResult = getWeatherUseCase.execute(city)
-            response.postValue(apiResult)
+            weatherResponse.postValue(apiResult)
         } else {
-            response.postValue(Resource.Error("Internet is not available"))
+            weatherResponse.postValue(Resource.Error("Internet is not available"))
         }
     }
     private fun isNetworkAvailable(context: Context?): Boolean {
