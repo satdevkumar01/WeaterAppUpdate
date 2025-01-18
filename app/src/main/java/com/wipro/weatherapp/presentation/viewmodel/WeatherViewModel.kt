@@ -5,7 +5,9 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.wipro.weatherapp.data.model.WeatherResponse
@@ -20,8 +22,11 @@ class WeatherViewModel(
    private val getWeatherUseCase: GetWeatherUseCase
     ) : AndroidViewModel(application) {
 
+
      val weatherResponse: MutableLiveData<Resource<WeatherResponse>> = MutableLiveData()
+     val weather: LiveData<Resource<WeatherResponse>> = weatherResponse
     fun getWeather(city:String) = viewModelScope.launch(Dispatchers.IO) {
+        
         weatherResponse.postValue(Resource.Loading())
         if (isNetworkAvailable(application)) {
             val apiResult = getWeatherUseCase.execute(city)

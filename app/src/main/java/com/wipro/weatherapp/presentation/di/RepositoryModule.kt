@@ -1,6 +1,6 @@
 package com.wipro.weatherapp.presentation.di
 
-import com.wipro.weatherapp.data.WeatherRepositoryImp
+import com.wipro.weatherapp.data.repository.WeatherRepositoryImpl
 import com.wipro.weatherapp.data.repository.dataSource.WeatherDataSource
 import com.wipro.weatherapp.domain.repository.WeatherRepository
 import dagger.Module
@@ -18,7 +18,7 @@ class RepositoryModule {
     fun provideWeatherRepository(
         weatherRemoteDataSource: WeatherDataSource,
     ): WeatherRepository {
-        return WeatherRepositoryImp(
+        return WeatherRepositoryImpl(
             weatherRemoteDataSource
         )
     }

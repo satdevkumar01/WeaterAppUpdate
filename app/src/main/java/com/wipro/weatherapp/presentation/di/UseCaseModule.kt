@@ -14,9 +14,9 @@ class UseCaseModule {
     @Singleton
     @Provides
     fun provideGetWeatherUseCase(
-        newsRepository: WeatherRepository
+        weatherRepository: WeatherRepository
     ): GetWeatherUseCase {
-        return GetWeatherUseCase(newsRepository)
+        return GetWeatherUseCase(weatherRepository)
     }
 
 }
