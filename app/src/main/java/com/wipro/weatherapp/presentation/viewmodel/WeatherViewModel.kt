@@ -5,7 +5,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,15 +17,15 @@ import kotlinx.coroutines.launch
 
 
 class WeatherViewModel(
-   private val application: Application,
-   private val getWeatherUseCase: GetWeatherUseCase
-    ) : AndroidViewModel(application) {
+    private val application: Application,
+    private val getWeatherUseCase: GetWeatherUseCase
+) : AndroidViewModel(application) {
 
 
-     val weatherResponse: MutableLiveData<Resource<WeatherResponse>> = MutableLiveData()
-     val weather: LiveData<Resource<WeatherResponse>> = weatherResponse
-    fun getWeather(city:String) = viewModelScope.launch(Dispatchers.IO) {
-        
+    val weatherResponse: MutableLiveData<Resource<WeatherResponse>> = MutableLiveData()
+    val weather: LiveData<Resource<WeatherResponse>> = weatherResponse
+    fun getWeather(city: String) = viewModelScope.launch(Dispatchers.IO) {
+
         weatherResponse.postValue(Resource.Loading())
         if (isNetworkAvailable(application)) {
             val apiResult = getWeatherUseCase.execute(city)
@@ -35,6 +34,7 @@ class WeatherViewModel(
             weatherResponse.postValue(Resource.Error("Internet is not available"))
         }
     }
+
     private fun isNetworkAvailable(context: Context?): Boolean {
         if (context == null) return false
         val connectivityManager =
